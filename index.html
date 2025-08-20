@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>✨ Gratitude Journal</title>
+    <meta name="description" content="Your daily companion for counting blessings and spreading joy">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#ff6b9d">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Gratitude Journal">
+
+    <meta name="author" content="Kaneeshkar - AK Industry">
+    <meta name="developer" content="Kaneeshkar">
+    <meta name="company" content="AK Industry">
+    
+   
+    <!-- iOS Specific Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Gratitude">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkdyYXRpdHVkZSBKb3VybmFsIiwKICAic2hvcnRfbmFtZSI6ICJHcmF0aXR1ZGUiLAogICJkZXNjcmlwdGlvbiI6ICJZb3VyIGRhaWx5IGNvbXBhbmlvbiBmb3IgY291bnRpbmcgYmxlc3NpbmdzIGFuZCBzcHJlYWRpbmcgam95IiwKICAic3RhcnRfdXJsIjogIi4vIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLAogICJ0aGVtZV9jb2xvciI6ICIjZmY2YjlkIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmOWYwIiwKICAiY2F0ZWdvcmllcyI6IFsibGlmZXN0eWxlIiwgImhlYWx0aCIsICJwcm9kdWN0aXZpdHkiXSwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l5TkVCaUlpQm9aV2xuYUhROUlqSTBVR0lpSUhaVlo2UXpCNGc5SWpBZ01DQXlOREFnTWpRd0lqNGdQSEpsWTNRZ2QybGtkR2c5SWpJME1DSWdhR1ZwWjJoMFBTSXlOREFpSUdacGJHdzlJaU5tWmpaN1lXUWlMejRnUEhCaGRHaGZaRDBpWTBGMFFWWjVVRzV6YUZWa2FGUW5ZWnowT25iNk1VZkhOWUc5bno4dWRramJGWUt3PT0iLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIGZpbGw9IiNmZjZiOWQiLz4gPHRleHQgeD0iOTYiIHk9IjEwNSIgZm9udC1zaXplPSI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPuKcqDwvdGV4dD48L3N2Zz4=">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHRleHQgeT0iMjAiIGZvbnQtc2l6ZT0iMjAiPuKcqDwvdGV4dD48L3N2Zz4=">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animation Container -->
+    <div id="animationContainer" class="animation-container"></div>
+
+    <div class="app-container">
+        <!-- PWA Install Banner -->
+        <div id="installBanner" class="install-banner hidden">
+            <div class="install-content">
+                <span class="install-text">✨ Add to your home screen for a magical experience!</span>
+                <div class="install-buttons">
+                    <button id="installBtn" class="btn btn--primary btn--sm">Add Now</button>
+                    <button id="dismissBtn" class="btn btn--outline btn--sm">Maybe later</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Status Indicator -->
+        <div id="networkStatus" class="network-status hidden">
+            <span id="networkText">💫 You're offline, but your gratitude is still saving locally!</span>
+        </div>
+
+        <!-- Main App Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>🙏 Gratitude Journal</h1>
+                    <p class="subtitle" id="welcomeMessage">Ready to count your blessings? ✨</p>
+                </div>
+                <div class="streak-display">
+                    <div class="streak-counter">
+                        <span class="streak-icon">🔥</span>
+                        <span id="streakCount">0</span>
+                        <span class="streak-label">day streak</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Daily Quote Section -->
+        <section class="quote-section">
+            <div class="quote-card card">
+                <div class="card__body">
+                    <div class="quote-icon">💝</div>
+                    <p id="dailyQuote" class="quote-text">Loading inspirational wisdom...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journal Entry Form -->
+        <section class="entry-section">
+            <div class="entry-form card">
+                <div class="card__body">
+                    <h3>Today's Blessings ✨</h3>
+                    <div class="form-group">
+                        <label for="gratitudeEntry" class="form-label">What made your heart happy today?</label>
+                        <textarea 
+                            id="gratitudeEntry" 
+                            class="form-control" 
+                            rows="5" 
+                            placeholder="Something that made me smile today..."
+                            maxlength="500"
+                        ></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span>/500 characters
+                        </div>
+                    </div>
+                    <div class="entry-actions">
+                        <button id="saveEntry" class="btn btn--primary btn--large btn--full-width">
+                            <span>Save My Gratitude</span>
+                            <span class="btn-icon">💖</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section class="calendar-section">
+            <div class="calendar-container card">
+                <div class="card__body">
+                    <div class="calendar-header">
+                        <h3>📅 Your Gratitude Journey</h3>
+                        <div class="calendar-nav">
+                            <button id="prevMonth" class="btn btn--secondary btn--sm">‹</button>
+                            <span id="currentMonth" class="current-month">August 2025</span>
+                            <button id="nextMonth" class="btn btn--secondary btn--sm">›</button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-weekdays">
+                            <div class="weekday">Sun</div>
+                            <div class="weekday">Mon</div>
+                            <div class="weekday">Tue</div>
+                            <div class="weekday">Wed</div>
+                            <div class="weekday">Thu</div>
+                            <div class="weekday">Fri</div>
+                            <div class="weekday">Sat</div>
+                        </div>
+                        <div id="calendarDays" class="calendar-days">
+                            <!-- Calendar days will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Stats -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card card">
+                    <div class="card__body">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-number" id="totalEntries">0</div>
+                        <div class="stat-label">Total Entries</div>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="card__body">
+                        <div class="stat-icon">🌟</div>
+                        <div class="stat-number" id="thisMonth">0</div>
+                        <div class="stat-label">This Month</div>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="card__body">
+                        <div class="stat-icon">👑</div>
+                        <div class="stat-number" id="bestStreak">0</div>
+                        <div class="stat-label">Best Streak</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Previous Entries -->
+        <section class="entries-section">
+            <div class="entries-header">
+                <h3>🌈 Recent Blessings</h3>
+                <button id="clearAll" class="btn btn--outline btn--sm">Clear All</button>
+            </div>
+            <div id="entriesList" class="entries-list">
+                <div class="empty-state">
+                    <div class="empty-icon">🌱</div>
+                    <p>Your beautiful gratitude moments will bloom here</p>
+                    <small>Start by writing something that made you smile today! 😊</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievement Modal -->
+        <div id="achievementModal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content achievement-modal">
+                <div class="achievement-content">
+                    <div class="achievement-icon">🏆</div>
+                    <h3 id="achievementTitle">Amazing Achievement!</h3>
+                    <p id="achievementMessage">You're building something beautiful!</p>
+                    <button id="closeAchievement" class="btn btn--primary">Continue Shining ✨</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Entry Modal -->
+        <div id="calendarModal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content calendar-modal">
+                <div class="calendar-entry-content">
+                    <div class="modal-header">
+                        <h3 id="calendarModalDate">Selected Date</h3>
+                        <button id="closeCalendarModal" class="close-btn">×</button>
+                    </div>
+                    <div id="calendarModalContent" class="modal-body">
+                        <!-- Calendar entry content will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmModal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content confirm-modal">
+                <div class="confirm-content">
+                    <div class="confirm-icon">⚠️</div>
+                    <h3>Clear All Your Beautiful Entries?</h3>
+                    <p>This will permanently delete all your gratitude memories. This action cannot be undone.</p>
+                    <div class="confirm-actions">
+                        <button id="confirmClear" class="btn btn--primary">Yes, Clear All</button>
+                        <button id="cancelClear" class="btn btn--outline">Keep My Memories</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <footer class="app-footer" style="background-color: #ffb3ecfb; text-align: center; padding: 12px 0; font-size: 14px; color: #000000;">
+      Developed by Kaneeshkar  &nbsp; | &nbsp; AK Industry
+     </footer>
+</body>
+</html>
